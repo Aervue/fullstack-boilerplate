@@ -1,0 +1,40 @@
+kind: Module
+name: minio-volume
+type: persistentvolumeclaim
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: Module
+description: S3 Object Storage
+type: container
+name: minio
+image: minio/minio
+services:
+  - name: minio
+    replicas: 1
+    command: ["sh"]
+    args:
+      [
+        "-c",
+        "mkdir -p /export/${var.S3_BUCKET} && /usr/bin/minio server /export",
+      ]
+    volumes:
+      - name: minio-volume
+        module: minio-volume
+        containerPath: /data
+    ports:
+      - name: interface
+        containerPort: 9000
+    ingresses:
+      - path: /
+        port: interface
+        hostname: minio.local.app.garden
+    env:
+      S3_BUCKET: ${var.S3_BUCKET}
+      MINIO_ACCESS_KEY: ${var.S3_ACCESS_KEY_ID} ## min 8 character
+      MINIO_SECRET_KEY: ${var.S3_SECRET_ACCESS_KEY} ## min 8 character
+    # dependencies:
+    #   - backend

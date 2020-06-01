@@ -1,0 +1,91 @@
+kind: Module
+description: Authentication framework
+type: container
+name: backend
+services:
+  - name: backend
+    replicas: 2
+    ports:
+      - name: interface
+        containerPort: 3000
+    ingresses:
+      - path: /
+        port: interface
+        hostname: backend.local.app.garden
+    env:
+      HASURA_ENDPOINT: ${var.HASURA_ENDPOINT}
+      HASURA_GRAPHQL_ADMIN_SECRET: ${var.HASURA_ADMIN_SECRET}
+      SERVER_URL: ${var.SERVER_URL}
+      # PORT: ${var.PORT} # NOT USED
+      AUTO_MIGRATE: ${var.AUTO_MIGRATE || ""}
+      AUTH_ENABLE: ${var.AUTH_ENABLE || ""}
+      STORAGE_ENABLE: ${var.STORAGE_ENABLE || ""}
+      COOKIE_SECRET: ${var.COOKIE_SECRET || ""}
+      JWT_KEY: ${var.HASURA_JWT_SECRET_KEY || ""}
+      JWT_ALGORITHM: ${var.HASURA_JWT_SECRET_TYPE || ""}
+      JWT_CLAIMS_NAMESPACE: ${var.JWT_CLAIMS_NAMESPACE || ""}
+      JWT_EXPIRES_IN: ${var.JWT_EXPIRES_IN || ""}
+      JWT_REFRESH_EXPIRES_IN: ${var.JWT_REFRESH_EXPIRES_IN || ""}
+      JWT_CUSTOM_FIELDS: ${var.JWT_CUSTOM_FIELDS || ""}
+      MAX_REQUESTS: ${var.MAX_REQUESTS || ""}
+      TIME_FRAME: ${var.TIME_FRAME || ""}
+      DEFAULT_USER_ROLE: ${var.DEFAULT_USER_ROLE || ""}
+      DEFAULT_ANONYMOUS_ROLE: ${var.DEFAULT_ANONYMOUS_ROLE || ""}
+      REGISTRATION_CUSTOM_FIELDS: ${var.REGISTRATION_CUSTOM_FIELDS || ""}
+      ANONYMOUS_USERS_ENABLE: ${var.ANONYMOUS_USERS_ENABLE || ""}
+      ALLOW_USER_SELF_DELETE: ${var.ALLOW_USER_SELF_DELETE || ""}
+      AUTO_ACTIVATE_NEW_USERS: ${var.AUTO_ACTIVATE_NEW_USERS || ""}
+      VERIFY_EMAILS: ${var.VERIFY_EMAILS || ""}
+      REDIRECT_URL_SUCCESS: ${var.REDIRECT_URL_SUCCESS || ""}
+      REDIRECT_URL_ERROR: ${var.REDIRECT_URL_ERROR || ""}
+      ALLOWED_EMAIL_DOMAINS: ${var.ALLOWED_EMAIL_DOMAIN || ""}
+      CHANGE_EMAIL_ENABLE: ${var.CHANGE_EMAIL_ENABLE || ""}
+      LOST_PASSWORD_ENABLE: ${var.LOST_PASSWORD_ENABLE || ""}
+      NOTIFY_EMAIL_CHANGE: ${var.NOTIFY_EMAIL_CHANGE || ""}
+      MIN_PASSWORD_LENGTH: ${var.MIN_PASSWORD_LENGTH || ""}
+      HIBP_ENABLE: ${var.HIBP_ENABLE || ""}
+      MFA_ENABLE: ${var.MFA_ENABLE || ""}
+      OTP_ISSUER: ${var.OTP_ISSUER || ""}
+      PROVIDER_SUCCESS_REDIRECT: ${var.PROVIDER_SUCCESS_REDIRECT || ""}
+      PROVIDER_FAILURE_REDIRECT: ${var.PROVIDER_FAILURE_REDIRECT || ""}
+      GITHUB_ENABLE: ${var.GITHUB_ENABLE || ""}
+      GITHUB_CLIENT_ID: ${var.GITHUB_CLIENT_ID || ""}
+      GITHUB_CLIENT_SECRET: ${var.GITHUB_CLIENT_SECRET || ""}
+      GITHUB_AUTHORIZATION_URL: ${var.GITHUB_AUTHORIZATION_URL || ""}
+      GITHUB_TOKEN_URL: ${var.GITHUB_TOKEN_URL || ""}
+      GITHUB_USER_PROFILE_URL: ${var.GITHUB_USER_PROFILE_URL || ""}
+      GOOGLE_ENABLE: ${var.GOOGLE_ENABLE || ""}
+      GOOGLE_CLIENT_ID: ${var.GOOGLE_CLIENT_ID || ""}
+      GOOGLE_CLIENT_SECRET: ${var.GOOGLE_CLIENT_SECRET || ""}
+      FACEBOOK_ENABLE: ${var.FACEBOOK_ENABLE || ""}
+      FACEBOOK_CLIENT_ID: ${var.FACEBOOK_CLIENT_ID || ""}
+      FACEBOOK_CLIENT_SECRET: ${var.FACEBOOK_CLIENT_SECRET || ""}
+      TWITTER_ENABLE: ${var.TWITTER_ENABLE || ""}
+      TWITTER_CONSUMER_KEY: ${var.TWITTER_CONSUMER_KEY || ""}
+      TWITTER_CONSUMER_SECRET: ${var.TWITTER_CONSUMER_SECRET || ""}
+      LINKEDIN_ENABLE: ${var.LINKEDIN_ENABLE || ""}
+      LINKEDIN_CLIENT_ID: ${var.LINKEDIN_CLIENT_ID || ""}
+      LINKEDIN_CLIENT_SECRET: ${var.LINKEDIN_CLIENT_SECRET || ""}
+      APPLE_ENABLE: ${var.APPLE_ENABLE || ""}
+      APPLE_CLIENT_ID: ${var.APPLE_CLIENT_ID || ""}
+      APPLE_TEAM_ID: ${var.APPLE_TEAM_ID || ""}
+      APPLE_KEY_ID: ${var.APPLE_KEY_ID || ""}
+      APPLE_PRIVATE_KEY: ${var.APPLE_PRIVATE_KEY || ""}
+      WINDOWS_LIVE_ENABLE: ${var.WINDOWS_LIVE_ENABLE || ""}
+      WINDOWS_LIVE_CLIENT_ID: ${var.WINDOWS_LIVE_CLIENT_ID || ""}
+      WINDOWS_LIVE_CLIENT_SECRET: ${var.WINDOWS_LIVE_CLIENT_SECRET || ""}
+      EMAILS_ENABLE: ${var.EMAILS_ENABLE || ""}
+      SMTP_HOST: ${var.SMTP_HOST || ""}
+      SMTP_PORT: ${var.SMTP_PORT || ""}
+      SMTP_USER: ${var.SMTP_USER || ""}
+      SMTP_PASS: ${var.SMTP_PASS || ""}
+      SMTP_SENDER: ${var.SMTP_SENDER || ""}
+      SMTP_AUTH_METHOD: ${var.SMTP_AUTH_METHOD || ""}
+      SMTP_SECURE: ${var.SMTP_SECURE || ""}
+      S3_ENDPOINT: ${var.S3_ENDPOINT || ""}
+      S3_BUCKET: ${var.S3_BUCKET || ""}
+      S3_ACCESS_KEY_ID: ${var.S3_ACCESS_KEY_ID || ""}
+      S3_SECRET_ACCESS_KEY: ${var.S3_SECRET_ACCESS_KEY || ""}
+    dependencies:
+      - hasura
+      - minio

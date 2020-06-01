@@ -1,0 +1,32 @@
+kind: Project
+name: fullstack-boilerplate
+environments:
+  - name: local
+#   - name: remote
+#     providers:
+#   - name: testing
+# # variables:
+# # You can put non-sensitive variables here instead of in garden.env files
+providers:
+  - name: local-kubernetes
+    environments: [local]
+    # buildMode: cluster-docker
+    # storage:
+    #   builder:
+    #     storageClass: nfs
+  # - name: kubernetes
+  #   environments: [remote]
+  #   # Replace these values as appropriate
+  #   context: microk8s
+  #   namespace: ${local.env.USER || local.username}-app
+  #   defaultHostname: ${local.env.USER || local.username}-app.dev-1.sys.garden
+  #   buildMode: cluster-docker
+  # - name: kubernetes
+  #   environments: [testing]
+  #   context: gke_garden-dev-200012_europe-west1-b_garden-dev-1
+  #   namespace: vote-testing-${local.env.CIRCLE_BUILD_NUM || local.username}
+  #   defaultHostname: vote-testing.dev-1.sys.garden
+  #   buildMode: cluster-docker
+  #   clusterDocker:
+  #     enableBuildKit: true
+  # # - name: openfaas
